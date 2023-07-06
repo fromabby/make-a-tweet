@@ -9,7 +9,7 @@ const TweetList = () => {
   const { savedTweets, clearAll } = useTweets()
 
   return (
-    <Section className='flex-col mt-10'>
+    <Section className='flex-col mt-10 pb-16'>
       <h1 className='font-bold text-xl'>Saved Tweets</h1>
       {savedTweets.length > 0 ? 
         <span

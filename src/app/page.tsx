@@ -1,12 +1,16 @@
+import Footer from "@/components/Footer"
+import Header from "@/components/Header"
 import InputSection from "@/components/InputSection"
 import TweetList from "@/components/TweetList"
 
 const Home = () => {
   return (
-    <div className='w-[100-vw] h-[100vh]'>
+    <main className='w-[100-vw] h-[100vh]'>
+      <Header />
       <InputSection />
       <TweetList />
-    </div>
+      <Footer />
+    </main>
   )
 }
 

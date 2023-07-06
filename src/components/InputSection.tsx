@@ -21,7 +21,7 @@ const InputSection = () => {
 
   return (
     <>
-      <Section>
+      <Section className='mt-10'>
         <textarea 
           cols={35}
           rows={4}
