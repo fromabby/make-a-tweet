@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import Section from '@/components/Section'
-import useTweets from '@/hooks/useTweets'
+// import useTweets from '@/hooks/useLocalStorageTweets'
 import useToast from '@/hooks/useToast'
+import useTweets from '@/hooks/useTweets'
 
 const InputSection = () => {
   const [text, setText] = useState("")

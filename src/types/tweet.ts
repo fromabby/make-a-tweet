@@ -1,4 +1,5 @@
 export interface SavedTweet {
+  id: string
   text: string
   href: string
 }

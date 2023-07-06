@@ -26,7 +26,7 @@ const useToast = (): UseToastProps => {
       <ToastMessage message={message} />
     </div> : null)
 
-  return { enqueue, Toast }
+  return { enqueue, Toast } as const
 }
 
 export default useToast

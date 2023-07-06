@@ -1,41 +1,51 @@
 import { SavedTweet, SavedTweets } from '@/types/tweet'
-import { useState, useEffect } from 'react'
+import { StoreApi, UseBoundStore, create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import { v4 as uuidv4 } from 'uuid'
 
-interface UseTweetReturn {
+interface UseTweetsStore {
   savedTweets: SavedTweets
   save: (text: string) => void
+  removeTweet: (id: string) => void
+  clearAll: () => void
 }
 
-const useTweets = (): UseTweetReturn => {
-  const [savedTweets, setSavedTweets] = useState<SavedTweets>([])
+const useTweetsStore: UseBoundStore<StoreApi<UseTweetsStore>> = create(
+  persist((set, get) => ({
+    savedTweets: [] as SavedTweets,
+    save: (text: string) => {
+      const href = `http://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
 
-  const saveToLocalStorage = (text: string) => {
-    const href = `http://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`
+      const savedTweets = get().savedTweets
 
-    const rawTweets = localStorage.getItem('TWEETS')
-    const savedTweets: SavedTweets = rawTweets ? JSON.parse(rawTweets) : []
+      const item: SavedTweet = {
+        id: uuidv4(),
+        text,
+        href
+      }
 
-    const item: SavedTweet = {
-      text,
-      href
+      const tweets = [...savedTweets, item]
+      set({
+        savedTweets: tweets
+      })
+    },
+    removeTweet: (id: string) => {
+      const savedTweets = get().savedTweets
+
+      const newTweets = savedTweets.filter((item) => item.id !== id)
+      
+      set({
+        savedTweets: newTweets
+      })
+    },
+    clearAll: () => {
+      set({
+        savedTweets: []
+      })
     }
+  }), {
+    name: 'tweets'
+  })
+)
 
-    const tweets = [...savedTweets, item]
-    localStorage.setItem('TWEETS', JSON.stringify(tweets))
-
-    setSavedTweets(tweets)
-  }
-
-  useEffect(() => {
-    const rawTweets = localStorage.getItem('TWEETS')
-    const savedTweets: SavedTweets = rawTweets ? JSON.parse(rawTweets) : []
-    setSavedTweets(savedTweets)
-  }, [])
-  
-  return { 
-    savedTweets,
-    save: saveToLocalStorage
-  }
-}
-
-export default useTweets
+export default useTweetsStore
