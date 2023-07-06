@@ -1,4 +1,5 @@
 // import useTweets from '@/hooks/useLocalStorageTweets'
+import useToast from '@/hooks/useToast'
 import useTweets from '@/hooks/useTweets'
 import { SavedTweet } from '@/types/tweet'
 import { FC, useState } from 'react'
@@ -12,6 +13,7 @@ const TweetItem: FC<TweetItemProps> = (props) => {
   const { id, text, href } = props.tweet
   const index = props.index+1
   const { update, removeTweet } = useTweets()
+  const { enqueue, Toast } = useToast()
 
   const [isEditing, setIsEditing] = useState(false)
   const [updatedText, setUpdatedText] = useState(text)
@@ -23,6 +25,13 @@ const TweetItem: FC<TweetItemProps> = (props) => {
 
   const Number = () => <span className='font-semibold text-xs pr-4'>{index}.</span>
   
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(href);
+      enqueue('Saved to clipboard!', 2)
+    } catch (err) {}
+  }
+
   return (
     <div className='m-2 p-2 w-96 flex justify-between items-center'>
       {isEditing ?
@@ -64,6 +73,7 @@ const TweetItem: FC<TweetItemProps> = (props) => {
                 open
               </a>
             </button>
+            <button onClick={copyToClipboard}>copy to clipboard</button>
             <p
               className='text-blue-500 hover:underline cursor-pointer'
               onClick={() => setIsEditing(true)}
@@ -75,7 +85,7 @@ const TweetItem: FC<TweetItemProps> = (props) => {
           </div>
         </>
       }
-      
+      <Toast />
     </div>
   )
 }
