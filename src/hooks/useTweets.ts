@@ -8,6 +8,7 @@ interface UseTweetsStore {
   save: (text: string) => void
   removeTweet: (id: string) => void
   clearAll: () => void
+  update: (id: string, text: string) => void
 }
 
 const useTweetsStore: UseBoundStore<StoreApi<UseTweetsStore>> = create(
@@ -41,6 +42,20 @@ const useTweetsStore: UseBoundStore<StoreApi<UseTweetsStore>> = create(
     clearAll: () => {
       set({
         savedTweets: []
+      })
+    },
+    update: (id: string, text: string) => {
+      const savedTweets = get().savedTweets
+
+      const index = savedTweets.findIndex((item) => item.id === id)
+
+      savedTweets[index] = {
+        ...savedTweets[index],
+        text
+      }
+
+      set({
+        savedTweets
       })
     }
   }), {

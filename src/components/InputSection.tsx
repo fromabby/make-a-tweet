@@ -23,20 +23,20 @@ const InputSection = () => {
     <>
       <Section>
         <textarea 
-            cols={35}
-            rows={4}
-            value={text}
-            onChange={e => setText(e.target.value)}
-            placeholder='Create tweet ...'
-            className='py-2 px-4 rounded focus-within:outline-none'
-          />
-          <button
-            type="button" 
-            className='border rounded-xl bg-slate-300 m-4 py-2 px-4 font-bold text-[#333]'
-            onClick={submitHandler}
-          >
-            save
-          </button>
+          cols={35}
+          rows={4}
+          value={text}
+          onChange={e => setText(e.target.value)}
+          placeholder='Create tweet ...'
+          className='py-2 px-4 rounded focus-within:outline-none'
+        />
+        <button
+          type="button" 
+          className='border rounded-xl bg-slate-300 m-4 py-2 px-4 font-bold text-[#333]'
+          onClick={submitHandler}
+        >
+          save
+        </button>
       </Section>
       <Toast />
     </>
