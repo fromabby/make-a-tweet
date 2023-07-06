@@ -64,15 +64,15 @@ const TweetItem: FC<TweetItemProps> = (props) => {
         <>
           <p><Number />{text}</p>
           <div className='flex justify-between items-center gap-3 text-xs'>
-            <button type="button" className='border rounded-xl bg-slate-300 py-2 px-4'>
               <a
                 target="_blank" 
                 href={href}
-                className='font-bold text-[#333]'
+                className='font-bold text-[#333] border rounded-xl bg-slate-300 py-2 px-4'
               >
+              <button type="button">
                 open
-              </a>
-            </button>
+              </button>
+            </a>
             <button onClick={copyToClipboard}>copy to clipboard</button>
             <p
               className='text-blue-500 hover:underline cursor-pointer'
